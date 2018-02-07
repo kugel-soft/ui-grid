@@ -77,12 +77,14 @@
               return ret;
             }
 
-            grid.renderContainers.body.registerViewportAdjuster(function (adjustment) {
-              myWidth = updateContainerWidth();
+            grid.renderContainers.body.registerViewportAdjuster(function (adjustment, side) {
+              if (!side || side === $scope.side) {
+                myWidth = updateContainerWidth();
 
-              // Subtract our own width
-              adjustment.width -= myWidth;
-              adjustment.side = $scope.side;
+                // Subtract our own width
+                adjustment.width -= myWidth;
+                adjustment.side = $scope.side;
+              }
 
               return adjustment;
             });

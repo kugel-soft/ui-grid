@@ -62,7 +62,6 @@ workbench/bootstrap*
 web.config
 # Build results
 [Dd]ebug/
-[Rr]elease/
 *_i.c
 *_p.c
 *.ilk
@@ -159,7 +158,13 @@ Desktop.ini
 # Packages
 *.egg
 *.egg-info
-dist
+dist/bootstrap
+dist/css
+dist/customizer
+dist/data
+dist/js
+dist/less
+dist/*.*
 eggs
 parts
 bin

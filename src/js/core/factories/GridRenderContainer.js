@@ -207,7 +207,7 @@ angular.module('ui.grid')
     var amount = 0;
 
     self.viewportAdjusters.forEach(function (func) {
-      var adjustment = func.call(this, { height: 0, width: 0 });
+      var adjustment = func.call(this, { height: 0, width: 0 }, side);
 
       if (adjustment.side && adjustment.side === side) {
         amount += adjustment.width * -1;
