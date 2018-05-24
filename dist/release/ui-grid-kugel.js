@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v - 2018-02-07
+ * ui-grid-kugel - v30.2.6 - 2018-05-24
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -13158,8 +13158,8 @@ module.filter('px', function() {
           },
           columns: 'Colunas:',
           importerTitle: 'Importar arquivo',
-          exporterAllAsCsv: 'Exportar todos os dados como csv',
-          exporterVisibleAsCsv: 'Exportar dados visíveis como csv',
+          exporterAllAsCsv: 'Exportar como csv',
+          exporterVisibleAsCsv: 'Exportar apenas colunas visíveis como csv',
           exporterSelectedAsCsv: 'Exportar dados selecionados como csv',
           exporterAllAsPdf: 'Exportar todos os dados como pdf',
           exporterVisibleAsPdf: 'Exportar dados visíveis como pdf',
@@ -18021,7 +18021,7 @@ module.filter('px', function() {
             {
               title: i18nService.getSafeText('gridMenu.exporterVisibleAsCsv'),
               action: function ($event) {
-                this.grid.api.exporter.csvExport( uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE );
+                this.grid.api.exporter.csvExport( uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE );
               },
               shown: function() {
                 return this.grid.options.exporterMenuCsv && this.grid.options.exporterMenuVisibleData;

@@ -552,7 +552,7 @@
             {
               title: i18nService.getSafeText('gridMenu.exporterVisibleAsCsv'),
               action: function ($event) {
-                this.grid.api.exporter.csvExport( uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE );
+                this.grid.api.exporter.csvExport( uiGridExporterConstants.ALL, uiGridExporterConstants.VISIBLE );
               },
               shown: function() {
                 return this.grid.options.exporterMenuCsv && this.grid.options.exporterMenuVisibleData;
