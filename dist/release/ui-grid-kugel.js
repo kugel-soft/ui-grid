@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v - 2018-05-24
+ * ui-grid-kugel - v - 2018-11-07
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -11160,7 +11160,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       this._purgeQueue();
       var promise = $timeout(function(){
         if (element){
-          element[0].focus();
+          element[0].focus({ preventScroll: true });
         }
       });
       this.queue.push(promise);

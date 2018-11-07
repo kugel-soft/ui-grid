@@ -854,7 +854,7 @@ module.service('gridUtil', ['$log', '$window', '$document', '$http', '$templateC
       this._purgeQueue();
       var promise = $timeout(function(){
         if (element){
-          element[0].focus();
+          element[0].focus({ preventScroll: true });
         }
       });
       this.queue.push(promise);
