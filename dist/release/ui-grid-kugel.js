@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v - 2018-11-07
+ * ui-grid-kugel - v - 2018-12-11
  * Copyright (c) 2018 ; License: MIT 
  */
 
@@ -10015,13 +10015,33 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
     if ( nulls !== null ){
       return nulls;
     } else {
-      var strA = a.toString().toLowerCase(),
-          strB = b.toString().toLowerCase();
+      if (isNumber(a) && isNumber(b)) {
+        return a - b;
+      }
+      var strA = unformatBrazilianDate(a.toString().toLowerCase()),
+          strB = unformatBrazilianDate(b.toString().toLowerCase());
 
       return strA === strB ? 0 : strA.localeCompare(strB);
     }
   };
 
+	var isNumber = function(obj) {
+		return +obj === obj;
+  };
+
+	var unformatBrazilianDate = function(str) {
+		var regexFullYear = /\d{2}\/\d{2}\/\d{4}/;
+		if (str.match(regexFullYear)) {
+			return str.substring(6, 10) + str.substring(3, 5) + str.substring(0, 2);
+		}
+
+		var regex = /\d{2}\/\d{2}\/\d{2}/;
+		if (str.match(regex)) {
+			return str.substring(6, 8) + str.substring(3, 5) + str.substring(0, 2);
+		}
+
+		return str;
+	};
 
   /**
    * @ngdoc method
