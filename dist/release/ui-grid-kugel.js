@@ -1,6 +1,6 @@
 /*!
- * ui-grid-kugel - v - 2018-12-11
- * Copyright (c) 2018 ; License: MIT 
+ * ui-grid-kugel - v - 2019-04-15
+ * Copyright (c) 2019 ; License: MIT 
  */
 
 (function () {
@@ -22041,6 +22041,29 @@ module.filter('px', function() {
                   }
 
                   grid.options.paginationCurrentPage = Math.min(page, publicApi.methods.pagination.getTotalPages());
+                },
+                /**
+                 * @ngdoc method
+                 * @name goToPageOf
+                 * @methodOf ui.grid.pagination.api:PublicAPI
+                 * @description Go to the page of the rowEntity 
+                 * @param {object} rowEntity gridOptions.data[] array instance
+                 */
+                goToPageOf: function(rowEntity) {
+                  if (grid.options.enablePagination && !grid.options.useExternalPagination && publicApi.methods.pagination.getTotalPages() > 1) {
+                    var sortedGridRows = grid.sortByColumn(grid.rows);
+                    var rowIndex = -1;
+                    angular.forEach(sortedGridRows, function(gridRow, index) {
+                      if (gridRow.entity === rowEntity) {
+                        rowIndex = index;
+                      }
+                    });
+                    if (rowIndex >= 0) {
+                      var pageSize = grid.options.paginationPageSize;
+                      var page = Math.floor(rowIndex / pageSize) + 1;
+                      publicApi.methods.pagination.seek(page);
+                    }
+                  }
                 }
               }
             }
@@ -24894,8 +24917,13 @@ module.filter('px', function() {
                  */
                 selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row !== null) {
+                    if (!row.isSelected) {
+                      service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                    }
+                    if (grid.api.pagination) {
+                      grid.api.pagination.goToPageOf(rowEntity);
+                    }
                   }
                 },
                 /**

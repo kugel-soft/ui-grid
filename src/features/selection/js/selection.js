@@ -173,8 +173,13 @@
                  */
                 selectRow: function (rowEntity, evt) {
                   var row = grid.getRow(rowEntity);
-                  if (row !== null && !row.isSelected) {
-                    service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                  if (row !== null) {
+                    if (!row.isSelected) {
+                      service.toggleRowSelection(grid, row, evt, grid.options.multiSelect, grid.options.noUnselect);
+                    }
+                    if (grid.api.pagination) {
+                      grid.api.pagination.goToPageOf(rowEntity);
+                    }
                   }
                 },
                 /**

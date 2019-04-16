@@ -80,6 +80,7 @@ web.config
 *.vspscc
 .builds
 *.dotCover
+.history
 
 #################
 ## Sublime Text
