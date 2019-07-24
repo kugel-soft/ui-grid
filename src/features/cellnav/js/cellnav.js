@@ -960,40 +960,40 @@
 
               var grid = uiGridCtrl.grid;
 
-              grid.api.core.on.scrollBegin($scope, function (args) {
+              // grid.api.core.on.scrollBegin($scope, function (args) {
 
-                // Skip if there's no currently-focused cell
-                var lastRowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
-                if (lastRowCol === null) {
-                  return;
-                }
+              //   // Skip if there's no currently-focused cell
+              //   var lastRowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
+              //   if (lastRowCol === null) {
+              //     return;
+              //   }
 
-                //if not in my container, move on
-                //todo: worry about horiz scroll
-                if (!renderContainerCtrl.colContainer.containsColumn(lastRowCol.col)) {
-                  return;
-                }
+              //   //if not in my container, move on
+              //   //todo: worry about horiz scroll
+              //   if (!renderContainerCtrl.colContainer.containsColumn(lastRowCol.col)) {
+              //     return;
+              //   }
 
-                uiGridCtrl.cellNav.clearFocus();
+              //   uiGridCtrl.cellNav.clearFocus();
 
-              });
+              // });
 
-              grid.api.core.on.scrollEnd($scope, function (args) {
-                // Skip if there's no currently-focused cell
-                var lastRowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
-                if (lastRowCol === null) {
-                  return;
-                }
+              // grid.api.core.on.scrollEnd($scope, function (args) {
+              //   // Skip if there's no currently-focused cell
+              //   var lastRowCol = uiGridCtrl.grid.api.cellNav.getFocusedCell();
+              //   if (lastRowCol === null) {
+              //     return;
+              //   }
 
-                //if not in my container, move on
-                //todo: worry about horiz scroll
-                if (!renderContainerCtrl.colContainer.containsColumn(lastRowCol.col)) {
-                  return;
-                }
+              //   //if not in my container, move on
+              //   //todo: worry about horiz scroll
+              //   if (!renderContainerCtrl.colContainer.containsColumn(lastRowCol.col)) {
+              //     return;
+              //   }
 
-                uiGridCtrl.cellNav.broadcastCellNav(lastRowCol);
+              //   uiGridCtrl.cellNav.broadcastCellNav(lastRowCol);
 
-              });
+              // });
 
               grid.api.cellNav.on.navigate($scope, function () {
                 //focus again because it can be lost
