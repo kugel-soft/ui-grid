@@ -799,6 +799,9 @@
                   if ( gridCol.colDef.exporterPdfAlign ) {
                     extractedField.alignment = gridCol.colDef.exporterPdfAlign;
                   }
+                  if ( gridCol.colDef.cellFilter ) {
+                    extractedField.cellFilter = gridCol.colDef.cellFilter;
+                  }
                   extractedRow.push(extractedField);
                 }
               });
@@ -865,6 +868,9 @@
         formatFieldAsCsv: function (field) {
           if (field.value == null) { // we want to catch anything null-ish, hence just == not ===
             return '';
+          }
+          if (field.cellFilter && field.cellFilter.indexOf('number') >= 0) {
+            return field.value;
           }
           if (typeof(field.value) === 'number') {
             return field.value;

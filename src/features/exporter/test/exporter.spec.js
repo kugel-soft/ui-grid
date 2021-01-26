@@ -220,56 +220,56 @@ describe('ui.grid.exporter uiGridExporterService', function () {
   describe('getData', function() {
     it('gets all rows and columns', function() {
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL)).toEqual([
-        [ {value: 'a_0'}, {value: 'b_0'}, {value: 'c_0'}, {value: 'd_0'} ],
-        [ {value: 'a_1'}, {value: 'b_1'}, {value: 'c_1'}, {value: 'd_1'} ],
-        [ {value: 'a_2'}, {value: 'b_2'}, {value: 'c_2'}, {value: 'd_2'} ]
+        [ {value: 'a_0'}, {value: 'b_0', cellFilter: 'uppercase'}, {value: 'c_0'}, {value: 'd_0'} ],
+        [ {value: 'a_1'}, {value: 'b_1', cellFilter: 'uppercase'}, {value: 'c_1'}, {value: 'd_1'} ],
+        [ {value: 'a_2'}, {value: 'b_2', cellFilter: 'uppercase'}, {value: 'c_2'}, {value: 'd_2'} ]
       ]);
     });
 
     it('ignores selection row header column', function() {
       grid.columns[0].colDef.exporterSuppressExport = true;
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL)).toEqual([
-        [ {value: 'b_0'}, {value: 'c_0'}, {value: 'd_0'} ],
-        [ {value: 'b_1'}, {value: 'c_1'}, {value: 'd_1'} ],
-        [ {value: 'b_2'}, {value: 'c_2'}, {value: 'd_2'} ]
+        [ {value: 'b_0', cellFilter: 'uppercase'}, {value: 'c_0'}, {value: 'd_0'} ],
+        [ {value: 'b_1', cellFilter: 'uppercase'}, {value: 'c_1'}, {value: 'd_1'} ],
+        [ {value: 'b_2', cellFilter: 'uppercase'}, {value: 'c_2'}, {value: 'd_2'} ]
       ]);
     });
 
     it('ignores suppressed column', function() {
       grid.options.exporterSuppressColumns = [ 'col1' ];
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL)).toEqual([
-        [ {value: 'b_0'}, {value: 'c_0'}, {value: 'd_0'} ],
-        [ {value: 'b_1'}, {value: 'c_1'}, {value: 'd_1'} ],
-        [ {value: 'b_2'}, {value: 'c_2'}, {value: 'd_2'} ]
+        [ {value: 'b_0', cellFilter: 'uppercase'}, {value: 'c_0'}, {value: 'd_0'} ],
+        [ {value: 'b_1', cellFilter: 'uppercase'}, {value: 'c_1'}, {value: 'd_1'} ],
+        [ {value: 'b_2', cellFilter: 'uppercase'}, {value: 'c_2'}, {value: 'd_2'} ]
       ]);
     });
 
     it('ignores disabled row', function() {
       grid.rows[1].exporterEnableExporting = false;
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL)).toEqual([
-        [ {value: 'a_0'}, {value: 'b_0'}, {value: 'c_0'}, {value: 'd_0'} ],
-        [ {value: 'a_2'}, {value: 'b_2'}, {value: 'c_2'}, {value: 'd_2'} ]
+        [ {value: 'a_0'}, {value: 'b_0', cellFilter: 'uppercase'}, {value: 'c_0'}, {value: 'd_0'} ],
+        [ {value: 'a_2'}, {value: 'b_2', cellFilter: 'uppercase'}, {value: 'c_2'}, {value: 'd_2'} ]
       ]);
     });
 
     it('gets visible rows and columns', function() {
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.VISIBLE, uiGridExporterConstants.VISIBLE)).toEqual([
-        [ {value: 'a_0'}, {value: 'b_0'}, {value: 'd_0'} ],
-        [ {value: 'a_2'}, {value: 'b_2'}, {value: 'd_2'} ]
+        [ {value: 'a_0'}, {value: 'b_0', cellFilter: 'uppercase'}, {value: 'd_0'} ],
+        [ {value: 'a_2'}, {value: 'b_2', cellFilter: 'uppercase'}, {value: 'd_2'} ]
       ]);
     });
 
     it('gets selected rows and visible columns', function() {
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.SELECTED, uiGridExporterConstants.VISIBLE)).toEqual([
-        [ {value: 'a_0'}, {value: 'b_0'}, {value: 'd_0'} ]
+        [ {value: 'a_0'}, {value: 'b_0', cellFilter: 'uppercase'}, {value: 'd_0'} ]
       ]);
     });
 
     it('gets the rows display values', function() {
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL, true)).toEqual([
-        [ {value: 'a_0'}, {value: 'B_0'}, {value: 'c_0'}, {value: 'd_0'} ],
-        [ {value: 'a_1'}, {value: 'B_1'}, {value: 'c_1'}, {value: 'd_1'} ],
-        [ {value: 'a_2'}, {value: 'B_2'}, {value: 'c_2'}, {value: 'd_2'} ]
+        [ {value: 'a_0'}, {value: 'B_0', cellFilter: 'uppercase'}, {value: 'c_0'}, {value: 'd_0'} ],
+        [ {value: 'a_1'}, {value: 'B_1', cellFilter: 'uppercase'}, {value: 'c_1'}, {value: 'd_1'} ],
+        [ {value: 'a_2'}, {value: 'B_2', cellFilter: 'uppercase'}, {value: 'c_2'}, {value: 'd_2'} ]
       ]);
     });
 
@@ -283,9 +283,9 @@ describe('ui.grid.exporter uiGridExporterService', function () {
       };
 
       expect(uiGridExporterService.getData(grid, uiGridExporterConstants.ALL, uiGridExporterConstants.ALL)).toEqual([
-        [ { value: 'a_0' }, { value: 'translated' }, { value: 'c_0' }, { value: 'd_0' } ],
-        [ { value: 'a_1' }, { value: 'translated' }, { value: 'c_1' }, { value: 'd_1' } ],
-        [ { value: 'a_2' }, { value: 'translated' }, { value: 'c_2' }, { value: 'd_2' } ]
+        [ { value: 'a_0' }, { value: 'translated', cellFilter: 'uppercase' }, { value: 'c_0' }, { value: 'd_0' } ],
+        [ { value: 'a_1' }, { value: 'translated', cellFilter: 'uppercase' }, { value: 'c_1' }, { value: 'd_1' } ],
+        [ { value: 'a_2' }, { value: 'translated', cellFilter: 'uppercase' }, { value: 'c_2' }, { value: 'd_2' } ]
       ]);
     });
   });
