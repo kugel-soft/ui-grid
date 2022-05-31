@@ -249,8 +249,21 @@
          *  </pre>
          */
         row.isExpanded = !row.isExpanded;
-        if (angular.isUndefined(row.expandedRowHeight)){
-          row.expandedRowHeight = grid.options.expandableRowHeight;
+        if (grid.options.flexibleExpandableRowHeight) {
+          // sets subgrid height based on number of rows, up to the maximum specified on grid.options.expandableRowHeight (default: 150)
+          var rowCount = row.entity.subGridOptions.data.length;
+          if (rowCount + 1 < Math.floor(grid.options.expandableRowHeight / grid.options.rowHeight)) {
+            var reducedExpandedRowHeight = (rowCount + 1) * grid.options.rowHeight + grid.scrollbarHeight;
+            row.expandedRowHeight = reducedExpandedRowHeight;
+            grid.options.expandableRowTemplate = grid.options.expandableRowTemplate.replace(/height:[0-9]+px/, 'height:' + (reducedExpandedRowHeight - 1) + 'px');
+          } else {
+            row.expandedRowHeight = grid.options.expandableRowHeight;
+            grid.options.expandableRowTemplate = grid.options.expandableRowTemplate.replace(/height:[0-9]+px/, 'height:' + (grid.options.expandableRowHeight - 1) + 'px');
+          }
+        } else {
+          if (angular.isUndefined(row.expandedRowHeight)){
+            row.expandedRowHeight = grid.options.expandableRowHeight;
+          }
         }
 
         if (row.isExpanded) {

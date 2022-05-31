@@ -2,7 +2,7 @@
   class="ui-grid-row-header-cell ui-grid-expandable-buttons-cell">
   <div
     class="ui-grid-cell-contents">
-    <i
+    <i ng-if="!grid.options.flexibleExpandableRowHeight"
       ng-class="{ 'ui-grid-icon-plus-squared' : !grid.expandable.expandedAll, 'ui-grid-icon-minus-squared' : grid.expandable.expandedAll }"
       ng-click="grid.api.expandable.toggleAllRows()">
     </i>

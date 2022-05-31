@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v - 2022-05-12
+ * ui-grid-kugel - v - 2022-05-27
  * Copyright (c) 2022 ; License: MIT 
  */
 
@@ -17188,8 +17188,21 @@ module.filter('px', function() {
          *  </pre>
          */
         row.isExpanded = !row.isExpanded;
-        if (angular.isUndefined(row.expandedRowHeight)){
-          row.expandedRowHeight = grid.options.expandableRowHeight;
+        if (grid.options.flexibleExpandableRowHeight) {
+          // sets subgrid height based on number of rows, up to the maximum specified on grid.options.expandableRowHeight (default: 150)
+          var rowCount = row.entity.subGridOptions.data.length;
+          if (rowCount + 1 < Math.floor(grid.options.expandableRowHeight / grid.options.rowHeight)) {
+            var reducedExpandedRowHeight = (rowCount + 1) * grid.options.rowHeight + grid.scrollbarHeight;
+            row.expandedRowHeight = reducedExpandedRowHeight;
+            grid.options.expandableRowTemplate = grid.options.expandableRowTemplate.replace(/height:[0-9]+px/, 'height:' + (reducedExpandedRowHeight - 1) + 'px');
+          } else {
+            row.expandedRowHeight = grid.options.expandableRowHeight;
+            grid.options.expandableRowTemplate = grid.options.expandableRowTemplate.replace(/height:[0-9]+px/, 'height:' + (grid.options.expandableRowHeight - 1) + 'px');
+          }
+        } else {
+          if (angular.isUndefined(row.expandedRowHeight)){
+            row.expandedRowHeight = grid.options.expandableRowHeight;
+          }
         }
 
         if (row.isExpanded) {
@@ -28337,7 +28350,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/expandableTopRowHeader',
-    "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\"><div class=\"ui-grid-cell-contents\"><i ng-class=\"{ 'ui-grid-icon-plus-squared' : !grid.expandable.expandedAll, 'ui-grid-icon-minus-squared' : grid.expandable.expandedAll }\" ng-click=\"grid.api.expandable.toggleAllRows()\"></i></div></div>"
+    "<div class=\"ui-grid-row-header-cell ui-grid-expandable-buttons-cell\"><div class=\"ui-grid-cell-contents\"><i ng-if=\"!grid.options.flexibleExpandableRowHeight\" ng-class=\"{ 'ui-grid-icon-plus-squared' : !grid.expandable.expandedAll, 'ui-grid-icon-minus-squared' : grid.expandable.expandedAll }\" ng-click=\"grid.api.expandable.toggleAllRows()\"></i></div></div>"
   );
 
 
