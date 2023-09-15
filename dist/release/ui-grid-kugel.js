@@ -1,6 +1,6 @@
 /*!
- * ui-grid-kugel - v - 2022-05-27
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid-kugel - v30.2.6-c86adc75 - 2023-09-15
+ * Copyright (c) 2023 ; License: MIT 
  */
 
 (function () {
@@ -28213,47 +28213,26 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/ui-grid',
-    "<div ui-i18n=\"en\" class=\"ui-grid\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style>.grid{{ grid.id }} {\r" +
+    "<div ui-i18n=\"en\" class=\"ui-grid\"><!-- TODO (c0bra): add \"scoped\" attr here, eventually? --><style ui-grid-style>.grid{{ grid.id }} {\n" +
+    "      /* Styles for the grid */\n" +
+    "    }\n" +
     "\n" +
-    "      /* Styles for the grid */\r" +
+    "    .grid{{ grid.id }} .ui-grid-row, .grid{{ grid.id }} .ui-grid-cell, .grid{{ grid.id }} .ui-grid-cell .ui-grid-vertical-bar {\n" +
+    "      height: {{ grid.options.rowHeight }}px;\n" +
+    "    }\n" +
     "\n" +
-    "    }\r" +
+    "    .grid{{ grid.id }} .ui-grid-row:last-child .ui-grid-cell {\n" +
+    "      border-bottom-width: {{ ((grid.getTotalRowHeight() < grid.getViewportHeight()) && '1') || '0' }}px;\n" +
+    "    }\n" +
     "\n" +
-    "\r" +
+    "    {{ grid.verticalScrollbarStyles }}\n" +
+    "    {{ grid.horizontalScrollbarStyles }}\n" +
     "\n" +
-    "    .grid{{ grid.id }} .ui-grid-row, .grid{{ grid.id }} .ui-grid-cell, .grid{{ grid.id }} .ui-grid-cell .ui-grid-vertical-bar {\r" +
-    "\n" +
-    "      height: {{ grid.options.rowHeight }}px;\r" +
-    "\n" +
-    "    }\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    .grid{{ grid.id }} .ui-grid-row:last-child .ui-grid-cell {\r" +
-    "\n" +
-    "      border-bottom-width: {{ ((grid.getTotalRowHeight() < grid.getViewportHeight()) && '1') || '0' }}px;\r" +
-    "\n" +
-    "    }\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    {{ grid.verticalScrollbarStyles }}\r" +
-    "\n" +
-    "    {{ grid.horizontalScrollbarStyles }}\r" +
-    "\n" +
-    "\r" +
-    "\n" +
-    "    /*\r" +
-    "\n" +
-    "    .ui-grid[dir=rtl] .ui-grid-viewport {\r" +
-    "\n" +
-    "      padding-left: {{ grid.verticalScrollbarWidth }}px;\r" +
-    "\n" +
-    "    }\r" +
-    "\n" +
-    "    */\r" +
-    "\n" +
-    "\r" +
+    "    /*\n" +
+    "    .ui-grid[dir=rtl] .ui-grid-viewport {\n" +
+    "      padding-left: {{ grid.verticalScrollbarWidth }}px;\n" +
+    "    }\n" +
+    "    */\n" +
     "\n" +
     "    {{ grid.customStyles }}</style><div class=\"ui-grid-contents-wrapper\"><div ui-grid-menu-button ng-if=\"grid.options.enableGridMenu\"></div><div ng-if=\"grid.hasLeftContainer()\" style=\"width: 0\" ui-grid-pinned-container=\"'left'\"></div><div ui-grid-render-container container-id=\"'body'\" col-container-name=\"'body'\" row-container-name=\"'body'\" bind-scroll-horizontal=\"true\" bind-scroll-vertical=\"true\" enable-horizontal-scrollbar=\"grid.options.enableHorizontalScrollbar\" enable-vertical-scrollbar=\"grid.options.enableVerticalScrollbar\"></div><div ng-if=\"grid.hasRightContainer()\" style=\"width: 0\" ui-grid-pinned-container=\"'right'\"></div><div ui-grid-grid-footer ng-if=\"grid.options.showGridFooter\"></div><div ui-grid-column-menu ng-if=\"grid.options.enableColumnMenus\"></div><div ng-transclude></div></div></div>"
   );
@@ -28265,26 +28244,16 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridColumnMenu',
-    "<div class=\"ui-grid-column-menu\"><div ui-grid-menu menu-items=\"menuItems\"><!-- <div class=\"ui-grid-column-menu\">\r" +
-    "\n" +
-    "    <div class=\"inner\" ng-show=\"menuShown\">\r" +
-    "\n" +
-    "      <ul>\r" +
-    "\n" +
-    "        <div ng-show=\"grid.options.enableSorting\">\r" +
-    "\n" +
-    "          <li ng-click=\"sortColumn($event, asc)\" ng-class=\"{ 'selected' : col.sort.direction == asc }\"><i class=\"ui-grid-icon-sort-alt-up\"></i> Sort Ascending</li>\r" +
-    "\n" +
-    "          <li ng-click=\"sortColumn($event, desc)\" ng-class=\"{ 'selected' : col.sort.direction == desc }\"><i class=\"ui-grid-icon-sort-alt-down\"></i> Sort Descending</li>\r" +
-    "\n" +
-    "          <li ng-show=\"col.sort.direction\" ng-click=\"unsortColumn()\"><i class=\"ui-grid-icon-cancel\"></i> Remove Sort</li>\r" +
-    "\n" +
-    "        </div>\r" +
-    "\n" +
-    "      </ul>\r" +
-    "\n" +
-    "    </div>\r" +
-    "\n" +
+    "<div class=\"ui-grid-column-menu\"><div ui-grid-menu menu-items=\"menuItems\"><!-- <div class=\"ui-grid-column-menu\">\n" +
+    "    <div class=\"inner\" ng-show=\"menuShown\">\n" +
+    "      <ul>\n" +
+    "        <div ng-show=\"grid.options.enableSorting\">\n" +
+    "          <li ng-click=\"sortColumn($event, asc)\" ng-class=\"{ 'selected' : col.sort.direction == asc }\"><i class=\"ui-grid-icon-sort-alt-up\"></i> Sort Ascending</li>\n" +
+    "          <li ng-click=\"sortColumn($event, desc)\" ng-class=\"{ 'selected' : col.sort.direction == desc }\"><i class=\"ui-grid-icon-sort-alt-down\"></i> Sort Descending</li>\n" +
+    "          <li ng-show=\"col.sort.direction\" ng-click=\"unsortColumn()\"><i class=\"ui-grid-icon-cancel\"></i> Remove Sort</li>\n" +
+    "        </div>\n" +
+    "      </ul>\n" +
+    "    </div>\n" +
     "  </div> --></div></div>"
   );
 
@@ -28305,7 +28274,7 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/uiGridMenuItem',
-    "<button type=\"button\" class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active': active(), 'ui-grid-sr-only': (!focus && screenReaderOnly) }\" aria-pressed=\"{{active()}}\" tabindex=\"0\" ng-focus=\"focus=true\" ng-blur=\"focus=false\"><i ng-class=\"icon\" aria-hidden=\"true\">&nbsp;</i> {{ name }}</button>"
+    "<span role=\"button\" class=\"ui-grid-menu-item\" ng-click=\"itemAction($event, title)\" ng-show=\"itemShown()\" ng-class=\"{ 'ui-grid-menu-item-active': active(), 'ui-grid-sr-only': (!focus && screenReaderOnly) }\" aria-pressed=\"{{active()}}\" tabindex=\"0\" ng-focus=\"focus=true\" ng-blur=\"focus=false\"><i ng-class=\"icon\" aria-hidden=\"true\">&nbsp;</i> {{ name }}</span>"
   );
 
 

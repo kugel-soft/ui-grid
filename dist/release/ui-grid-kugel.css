@@ -1,6 +1,6 @@
 /*!
- * ui-grid-kugel - v - 2022-05-27
- * Copyright (c) 2022 ; License: MIT 
+ * ui-grid-kugel - v30.2.6-c86adc75 - 2023-09-15
+ * Copyright (c) 2023 ; License: MIT 
  */
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:before,
 #ui-grid-twbs #ui-grid-twbs .form-horizontal .form-group:after,
@@ -707,20 +707,21 @@ fieldset[disabled] .ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.
 .ui-grid-menu .ui-grid-menu-inner ul li {
   padding: 0px;
 }
-.ui-grid-menu .ui-grid-menu-inner ul li button {
+.ui-grid-menu .ui-grid-menu-inner ul li .ui-grid-menu-item {
   min-width: 100%;
-  padding: 8px;
+  padding: 4px;
   text-align: left;
   background: transparent;
   border: none;
+  display: block;
 }
-.ui-grid-menu .ui-grid-menu-inner ul li button:hover,
-.ui-grid-menu .ui-grid-menu-inner ul li button:focus {
+.ui-grid-menu .ui-grid-menu-inner ul li .ui-grid-menu-item:hover,
+.ui-grid-menu .ui-grid-menu-inner ul li .ui-grid-menu-item:focus {
   -webkit-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
 }
-.ui-grid-menu .ui-grid-menu-inner ul li button.ui-grid-menu-item-active {
+.ui-grid-menu .ui-grid-menu-inner ul li .ui-grid-menu-item.ui-grid-menu-item-active {
   -webkit-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.2);
