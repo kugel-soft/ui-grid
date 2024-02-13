@@ -969,8 +969,16 @@
                   }
 
                   $elm.on('blur', function (evt) {
-                    $scope.stopEdit(evt);
+                    lostFocus();
                   });
+
+                  function lostFocus() {
+                    if ($scope.col.colDef.type === 'data' && document.getElementsByClassName('datepicker-dropdown').length) {
+                      $timeout(lostFocus, 50);
+                    } else {
+                      $scope.stopEdit(evt);
+                    }
+                  }
                 });
 
 
