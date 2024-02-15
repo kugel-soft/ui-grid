@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v - 2024-02-13
+ * ui-grid-kugel - v - 2024-02-15
  * Copyright (c) 2024 ; License: MIT 
  */
 
@@ -9847,8 +9847,7 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
    * @methodOf ui.grid.class:RowSorter
    * @name guessSortFn
    * @description Assigns a sort function to use based on the itemType in the column
-   * @param {string} itemType one of 'number', 'boolean', 'string', 'date', 'object'.  And
-   * error will be thrown for any other type.
+   * @param {string} itemType one of 'number', 'boolean', 'string', 'date', 'object'.
    * @returns {function} a sort function that will sort that type
    */
   rowSorter.guessSortFn = function guessSortFn(itemType) {
@@ -9859,14 +9858,12 @@ module.service('rowSorter', ['$parse', 'uiGridConstants', function ($parse, uiGr
         return rowSorter.sortNumberStr;
       case "boolean":
         return rowSorter.sortBool;
-      case "string":
-        return rowSorter.sortAlpha;
       case "date":
         return rowSorter.sortDate;
       case "object":
         return rowSorter.basicSort;
       default:
-        throw new Error('No sorting function found for type:' + itemType);
+        return rowSorter.sortAlpha;
     }
   };
 
