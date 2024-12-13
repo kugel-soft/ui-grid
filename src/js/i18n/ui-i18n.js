@@ -149,7 +149,7 @@
          * @methodOf ui.grid.i18n.service:i18nService
          * @description  returns the text specified in the path or a Missing text if text is not found
          * @param {string} path property path to use for retrieving text from string map
-         * @param {string} lang to return.  If not specified, returns current language
+         * @param {string} [lang] to return.  If not specified, returns current language
          * @returns {object} the translation for the path
          * @example
          * <pre>

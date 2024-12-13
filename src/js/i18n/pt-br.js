@@ -79,6 +79,10 @@
           invalidJson: 'Arquivo não pode ser processado. É um Json válido?',
           jsonNotArray: 'Arquivo json importado tem que conter um array. Abortando.'
         },
+        exporter: {
+          trueValue: 'Sim',
+          falseValue: 'Não'
+        },
         pagination: {
           aria: {
             pageToFirst: 'Primeira página',

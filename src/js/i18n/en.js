@@ -79,6 +79,10 @@
           invalidJson: 'File was unable to be processed, is it valid Json?',
           jsonNotArray: 'Imported json file must contain an array, aborting.'
         },
+        exporter: {
+          trueValue: 'TRUE',
+          falseValue: 'FALSE'
+        },
         pagination: {
           aria: {
             pageToFirst: 'Page to first',

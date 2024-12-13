@@ -74,8 +74,18 @@
    *
    *  @description Services for exporter feature
    */
-  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService',
-    function ($q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService) {
+  module.service('uiGridExporterService', ['$q', 'uiGridExporterConstants', 'gridUtil', '$compile', '$interval', 'i18nService', 'i18nConstants',
+    function ($q, uiGridExporterConstants, gridUtil, $compile, $interval, i18nService, i18nConstants) {
+
+      var trueText = i18nService.getSafeText('exporter.trueValue');
+      var falseText = i18nService.getSafeText('exporter.falseValue');
+
+      if (trueText === i18nConstants.MISSING) {
+        trueText = 'TRUE';
+      }
+      if (falseText === i18nConstants.MISSING) {
+        trueText = 'FALSE';
+      }
 
       var service = {
 
@@ -876,7 +886,7 @@
             return field.value;
           }
           if (typeof(field.value) === 'boolean') {
-            return (field.value ? 'TRUE' : 'FALSE') ;
+            return (field.value ? trueText : falseText);
           }
           if (typeof(field.value) === 'string') {
             return '"' + field.value.replace(/"/g,'""') + '"';
