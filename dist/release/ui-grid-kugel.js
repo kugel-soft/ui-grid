@@ -1,5 +1,5 @@
 /*!
- * ui-grid-kugel - v30.2.6-8857f666 - 2024-12-13
+ * ui-grid-kugel - v30.2.6-ea634941 - 2024-12-16
  * Copyright (c) 2024 ; License: MIT 
  */
 
@@ -5803,6 +5803,10 @@ angular.module('ui.grid')
     return p.promise;
   };
 
+  function getPrevScrollValue(rowsAdded, prevScrollVal) {
+    return rowsAdded || prevScrollVal > 0 ? prevScrollVal : null;
+  }
+
 
   /**
    * @ngdoc function
@@ -5818,18 +5822,15 @@ angular.module('ui.grid')
     var self = this;
 
     for (var i in self.renderContainers) {
-      var container = self.renderContainers[i];
+      var container = self.renderContainers[i],
+        prevScrollTop = getPrevScrollValue(rowsAdded, container.prevScrollTop),
+        prevScrollLeft = getPrevScrollValue(rowsAdded, container.prevScrollLeft),
+        prevScrolltopPercentage = rowsAdded || prevScrollTop > 0 ? null : container.prevScrolltopPercentage;
 
       // gridUtil.logDebug('redrawing container', i);
 
-      if (rowsAdded) {
-        container.adjustRows(container.prevScrollTop, null);
-        container.adjustColumns(container.prevScrollLeft, null);
-      }
-      else {
-        container.adjustRows(null, container.prevScrolltopPercentage);
-        container.adjustColumns(null, container.prevScrollleftPercentage);
-      }
+      container.adjustRows(prevScrollTop, prevScrolltopPercentage);
+      container.adjustColumns(prevScrollLeft);
     }
   };
 
@@ -8387,7 +8388,7 @@ angular.module('ui.grid')
       scrollLeft = (this.getCanvasWidth() - this.getViewportWidth()) * scrollPercentage;
     }
 
-    this.adjustColumns(scrollLeft, scrollPercentage);
+    this.adjustColumns(scrollLeft);
 
     this.prevScrollLeft = scrollLeft;
     this.prevScrollleftPercentage = scrollPercentage;
@@ -8450,7 +8451,7 @@ angular.module('ui.grid')
     self.prevRowScrollIndex = rowIndex;
   };
 
-  GridRenderContainer.prototype.adjustColumns = function adjustColumns(scrollLeft, scrollPercentage) {
+  GridRenderContainer.prototype.adjustColumns = function adjustColumns(scrollLeft) {
     var self = this;
 
     var minCols = self.minColumnsToRender();
@@ -8458,17 +8459,7 @@ angular.module('ui.grid')
     var columnCache = self.visibleColumnCache;
     var maxColumnIndex = columnCache.length - minCols;
 
-    // Calculate the scroll percentage according to the scrollLeft location, if no percentage was provided
-    if ((typeof(scrollPercentage) === 'undefined' || scrollPercentage === null) && scrollLeft) {
-      scrollPercentage = scrollLeft / self.getHorizontalScrollLength();
-    }
-
-    var colIndex = Math.ceil(Math.min(maxColumnIndex, maxColumnIndex * scrollPercentage));
-
-    // Define a max row index that we can't scroll past
-    if (colIndex > maxColumnIndex) {
-      colIndex = maxColumnIndex;
-    }
+    var colIndex = Math.min(maxColumnIndex, self.getLeftIndex(scrollLeft));
 
     var newRange = [];
     if (columnCache.length > self.grid.options.columnVirtualizationThreshold && self.getCanvasWidth() > self.getViewportWidth()) {
@@ -8497,6 +8488,21 @@ angular.module('ui.grid')
     self.updateViewableColumnRange(newRange);
 
     self.prevColumnScrollIndex = colIndex;
+  };
+
+  GridRenderContainer.prototype.getLeftIndex = function getLeftIndex(scrollLeft) {
+    var wholeLeftWidth = 0;
+    var index = 0;
+    for (index; index < this.visibleColumnCache.length; index++) {
+      if (this.visibleColumnCache[index] && this.visibleColumnCache[index].visible) {
+        //accumulate the whole width of columns on the left side, till the point of visibility is surpassed, this is our wanted index
+        wholeLeftWidth += this.visibleColumnCache[index].drawnWidth;
+        if (wholeLeftWidth >= scrollLeft) {
+          break;
+        }
+      }
+    }
+    return index;
   };
 
   // Method for updating the visible rows
