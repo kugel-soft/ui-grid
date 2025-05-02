@@ -106,7 +106,11 @@
                   if ( tooltipType && col[tooltipType] === false ){
                     template = template.replace(uiGridConstants.TOOLTIP, '');
                   } else if ( tooltipType && col[tooltipType] ){
-                    template = template.replace(uiGridConstants.TOOLTIP, 'title="{{' + tooltipCall + ' CUSTOM_FILTERS }}"');
+                    var filters = 'CUSTOM_FILTERS';
+                    if (tooltipType === 'cellTooltip' && colDef.cellTooltip && typeof colDef.cellTooltip === 'function') {
+                      filters = '';
+                    }
+                    template = template.replace(uiGridConstants.TOOLTIP, 'title="{{' + tooltipCall + ' ' + filters + ' }}"');
                   }
 
                   if ( filterType ){

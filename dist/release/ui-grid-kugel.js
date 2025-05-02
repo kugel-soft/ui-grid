@@ -1,6 +1,6 @@
 /*!
- * ui-grid-kugel - v30.2.6-ea634941 - 2024-12-16
- * Copyright (c) 2024 ; License: MIT 
+ * ui-grid-kugel - v - 2025-05-02
+ * Copyright (c) 2025 ; License: MIT 
  */
 
 (function () {
@@ -9314,7 +9314,11 @@ angular.module('ui.grid')
                   if ( tooltipType && col[tooltipType] === false ){
                     template = template.replace(uiGridConstants.TOOLTIP, '');
                   } else if ( tooltipType && col[tooltipType] ){
-                    template = template.replace(uiGridConstants.TOOLTIP, 'title="{{' + tooltipCall + ' CUSTOM_FILTERS }}"');
+                    var filters = 'CUSTOM_FILTERS';
+                    if (tooltipType === 'cellTooltip' && colDef.cellTooltip && typeof colDef.cellTooltip === 'function') {
+                      filters = '';
+                    }
+                    template = template.replace(uiGridConstants.TOOLTIP, 'title="{{' + tooltipCall + ' ' + filters + ' }}"');
                   }
 
                   if ( filterType ){
