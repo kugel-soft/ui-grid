@@ -137,7 +137,8 @@
                  */
                 goToPageOf: function(rowEntity) {
                   if (grid.options.enablePagination && !grid.options.useExternalPagination && publicApi.methods.pagination.getTotalPages() > 1) {
-                    var sortedGridRows = grid.sortByColumn(grid.rows);
+                    const visibleRows = grid.rows.filter(e => e.visible);
+                    var sortedGridRows = grid.sortByColumn(visibleRows);
                     var rowIndex = -1;
                     angular.forEach(sortedGridRows, function(gridRow, index) {
                       if (gridRow.entity === rowEntity) {
