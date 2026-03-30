@@ -1,6 +1,6 @@
 /*!
- * ui-grid-kugel - v30.2.6-6f999110 - 2025-08-06
- * Copyright (c) 2025 ; License: MIT 
+ * ui-grid-kugel - v - 2026-03-30
+ * Copyright (c) 2026 ; License: MIT 
  */
 
 (function () {
@@ -16409,6 +16409,12 @@ module.filter('px', function() {
                 return;
               }
 
+              if ($scope.grid.activeEditor) {
+                $timeout(function() {
+                  beginEditAfterScroll(triggerEvent);
+                });
+                return;
+              }
 
               cellModel = $parse($scope.row.getQualifiedColField($scope.col));
               //get original value from the cell
@@ -16610,6 +16616,11 @@ module.filter('px', function() {
                 if (controllers[1]) { renderContainerCtrl = controllers[1]; }
                 if (controllers[2]) { ngModel = controllers[2]; }
 
+                $scope.grid.activeEditor = $elm;
+                $scope.$on('$destroy', function (evt) {
+                  $scope.grid.activeEditor = null;
+                });
+
                 //set focus at start of edit
                 $scope.$on(uiGridEditConstants.events.BEGIN_CELL_EDIT, function (evt,triggerEvent) {
                   $timeout(function () {
@@ -16652,6 +16663,10 @@ module.filter('px', function() {
                   function lostFocus() {
                     if ($scope.col.colDef.type === 'data' && document.getElementsByClassName('datepicker-dropdown').length) {
                       $timeout(lostFocus, 50);
+                    } else if ($scope.col.colDef.zoom) {
+                      $timeout(function () {
+                        $scope.stopEdit(evt);
+                      }, 150);
                     } else {
                       $scope.stopEdit(evt);
                     }
